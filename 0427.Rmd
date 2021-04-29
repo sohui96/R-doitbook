@@ -1,0 +1,174 @@
+---
+title: '4/27 R 프로그래밍 학습일지2'
+author: "Nigella"
+date: '2021/4/27'
+output:
+ html_document:
+    fig_height: 6
+    fig_width: 10
+    highlight: textmate
+    theme: cosmo
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+---
+
+
+---
+  
+# 벡터
+
+## length()
+```{r}
+y <- c(1,2,3,4,5)
+x <- c("1", 2, "3")
+length(x)
+```
+x 벡터의 길이는 3이다.
+  
+  
+## NROW()
+```{r}
+nrow(x)
+NROW(x)
+```
+다음 명령어로도 길이를 알 수 있다.단, 소문자 nrow()는 행렬에서 가능하다.
+  
+  
+## 벡터접근
+```{r}
+x[c(1,3)]
+x[1:2]
+```
+index 개념처럼 x의 첫번째와 세번째를 출력한 결과이다.
+   
+   
+## names()
+```{r}
+names(x) <- c("kim","seo","park")
+x[-1]
+```
+x 벡터의 각각에 이름을 붙인 후 kim을 제외하고 출력한 결과이다.
+
+## Set Operations
+```{r}
+identical(x,y)
+union(x,y)
+intersect(x,y)
+setdiff(x,y)
+setequal(x,y[-1])
+```
+    
+순서대로 보자면,
+```{r}
+identical(c(1,2,3),c(1,2,3))
+identical(c(1,2,3),c(1,2,100))
+c(1,2,3) == c(1,2,100)
+```
+identical()은 x와 y의 구성원이 모두 같은지를 확인할 수 있다.
+
+```{r}
+union(c("a","b","c"),c("a","d"))
+```
+union()은 합집합 개념이다.
+
+```{r}
+intersect(c("a","b","c"),c("a","d"))
+```
+intersect()은 교집합 개념이다.
+
+```{r}
+setdiff(c("a","b","c"),c("a","d"))
+```
+setdiff()은 같은 것을 빼고 출력해준다. 단, 처음 오는 변수 기준이다.
+
+```{r}
+setequal(c("a","b","c"),c("a","d"))
+```
+setequal()은 x와 y의 구성원이 모두 같은지를 확인할 수 있다.
+
+## %in%
+```{r}
+x<-c(1:5)
+y<-c(1:5)
+5 %in% x
+"a" %in% c("a","b","c")
+"d" %in% c("a","b","c")
+x + 1
+```
+%in%를 이용하여 5가 x 안에 있는지를 알 수 있다.
+x + 1 은 R은 알아서 x벡터 안에 각각의 구성원에게 1을 더해준다.
+
+## seq(), rep()
+```{r}
+seq(1,5,1)
+seq_along(along.with=2)
+
+rep(1:2,times=5)
+rep(1:2,each=5)
+rep(1:2,each=5,times=2)
+```
+반복출력에 관한 코드이다.
+
+---
+
+# 리스트
+```{r}
+x <- list(name="foo", height=70)
+x
+```
+
+---
+
+# 행렬
+```{r}
+x <- matrix(1:9, nrow=3)
+matrix(1:9, nrow=3,byrow=TRUE)
+matrix(1:9, nrow=3,
+       dimnames=list(c("r1","r2","r3"),c("c1","c2","c3")))
+
+x * 2
+x - x
+x %*% x 
+x <- matrix(1:4, ncol=2)
+x %*% solve(x)
+dim(x)
+
+array(1:12, dim=c(3,4))
+x <- array(1:12, dim=c(2, 2, 3))
+x[,,3]
+dim(x)
+```
+
+---
+
+# 데이터프레임
+```{r}
+grade <- data.frame("성명"=c("홍길동", "김길동", "박길동"),
+                    "국어"=c(80,97,85),
+                    "영어"=c(94,100,97))
+
+d <- data.frame(x=c(1, 2, 3, 4, 5), 
+                y=c(2, 4, 6, 8, 10),
+                z=c('M', 'F', 'M', 'F', 'M'),
+                stringsAsFactors = T)
+d$colname <- y
+d$w <- c("A", "B", "C", "D", "E")
+
+d <- data.frame(a=1:3, b=4:6, c=7:9)
+d[, names(d) %in% c("b", "c")]
+d[,1]
+d[,1,drop=F]
+```
+
+---
+
+# 유틸리티
+```{r}
+d <- data.frame(x=1:1000)
+head(d)
+tail(d)
+#View(d)
+```
+
+끝.
