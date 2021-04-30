@@ -3,6 +3,8 @@ title: '4/30 R 프로그래밍 학습일지5'
 author: "Nigella"
 date: '2021/4/30'
 output: rmarkdown::github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ---
@@ -112,19 +114,40 @@ legend(0.5,1,"서울시 응답소 요청사항 분석",
 #과제1) 텍스트마이닝_제주도추천여행코스분석
 #제주도에서 추천되는 여행코스로 많이 소개되는 지명을 워드클라우드로 시각화하세요.
 library(KoNLP)
+library(wordcloud)
+library(RColorBrewer)
+
 name <-readLines("./data/제주도여행지.txt")
 
 data1 <-readLines("./data/jeju.txt")
 data2 <- sapply(data1, extractNoun, USE.NAMES=F)
 data3 <- unlist(data2)
+
 # word <- c("\\d+","[A-z]","[:punct:]","\\W","^소$","^수$",
 #           "^도$","^한$","^곳$","^것$","^날$","^적$","^숙$","^항$",
 #           "^저$","^차$","^분$")
+# for(i in word){
+#   data3 <- gsub(word[i],"",data3)
+# }
 
-#data3 <- data3[which(data3%in%name)]
 data4 <- NULL
+#1
 for(i in 1:length(name)){
   data4 <- c(data4,data3[which(data3 %in% name[i])])
+}
+#2
+for(j in data3){
+  if(j %in% name){
+    data4 <- c(data4,j)
+  }
+}
+#3
+for(j in data3){
+  for(i in name){
+    if(j %in% i){
+      data4 <- c(data4,j)
+    }
+  }
 }
 
 write(data4, "./data/jeju_2.txt")
@@ -132,8 +155,7 @@ data5 <- read.table("./data/jeju_2.txt")
 wordcount <- table(data5)
 head(sort(wordcount,decreasing=T),20)
 
-library(wordcloud)
-library(RColorBrewer) 
+ 
 palete <- brewer.pal(9,"Set3")
 palete <- brewer.pal(9,"Paired") 
 wordcloud(names(wordcount),
