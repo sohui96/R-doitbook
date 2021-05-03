@@ -1,27 +1,29 @@
 <R-programing>
   
-#### 목적: 복습 및 기록
-#### 이유: 학습내용을 체계적으로 관리할 수 있고 더 기억에 남는다. 내가 어제 무엇을 배웠는지 보고 기억할 수 있다. 
-#### 기대효과 : 기억하는 것도 중요하지만 IT 글 작성 능력을 기른다. 예를들어, .md 작성을 통해 제 3자에게 소개할 때 데이터 구조와 그 내용을 쉽게 이해할 수 있도록 하는 능력을 기를 수 있다고 기대한다.
+## 목적
+: 복습 및 기록
+## 이유
+: 학습내용을 체계적으로 관리할 수 있고 더 기억에 남는다. 내가 어제 무엇을 배웠는지 보고 기억할 수 있다. 
+## 기대효과 
+: 기억하는 것도 중요하지만 IT 글 작성 능력을 기른다. 예를들어, .md 작성을 통해 제 3자에게 소개할 때 데이터 구조와 그 내용을 쉽게 이해할 수 있도록 하는 능력을 기를 수 있다고 기대한다.
 
 ---
 Using book is
 
 이름           | 내용
 :------------- |:-------------
-
 [책] | "Do it! 쉽게 배우는 R 데이터 분석"
 [지은이] | 데이터 분석가 김영우
 [출판사] | 이지스퍼블리싱
 [깃 저장소] | Do it 깃 저장소 [[바로가기]](https://github.com/youngwoos/Doit_R)
 
 ---
+git structure
 
 폴더           | 내용
 :------------- |:-------------
-[Data](https://github.com/youngwoos/Doit_R/tree/master/Data) | 실습 데이터 파일
-[Script](https://github.com/youngwoos/Doit_R/tree/master/Script) | 본문 R 스크립트, 분석 도전 정답
-[Lecture](https://github.com/youngwoos/Doit_R/tree/master/Lecture) | 강의용 프리젠테이션 자료
+[week01](https://github.com/sohui96/week01) | 1주차 기초 R 실습
+[doitbook](https://github.com/sohui96/doitbook) | Do it book 실습
 
 ---
 
