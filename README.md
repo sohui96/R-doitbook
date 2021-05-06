@@ -22,8 +22,8 @@ git structure
 
 폴더           | 내용
 :------------- |:-------------
-[week01](https://github.com/sohui96/week01) | 1주차 기초 R 실습
-[doitbook](https://github.com/sohui96/doitbook) | Do it book 실습
+[week01](https://github.com/sohui96/R-programing/tree/main/week01) | 1주차 기초 R 실습
+[doitbook](https://github.com/sohui96/R-programing/tree/main/doitbook) | Do it book 실습
 
 ---
 
