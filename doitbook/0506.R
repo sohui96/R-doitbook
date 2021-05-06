@@ -75,11 +75,11 @@ class(sex)
 table(sex)
 
 ### 이상치 결측 처리
-welfare15$sex <- ifelse(sex==9, NA, sex)
+welfare15$sex <- ifelse(welfare15$sex==9, NA, welfare15$sex)
 ### 결측치 확인
 table(is.na(sex))
 
-welfare15$sex <- ifelse(sex==1, "male","female")
+welfare15$sex <- ifelse(welfare15$sex==1, "male","female")
 table(sex)
 qplot(sex)
 
@@ -93,7 +93,7 @@ qplot(income) + xlim(0,1000)
 ### 이상치 확인
 summary(income)
 ### 이상치 결측 처리
-welfare15$income <- ifelse(income %in% c(0,9999), NA, income)
+welfare15$income <- ifelse(welfare15$income %in% c(0,9999), NA, welfare15$income)
 ### 결측치 확인
 table(is.na(income))
 
@@ -119,11 +119,11 @@ qplot(birth)
 table(is.na(birth))
 
 ### 이상치 결측 처리
-birth <- ifelse(birth==9999, NA, birth)
+welfare15$birth <- ifelse(welfare15$birth==9999, NA, welfare15$birth)
 table(is.na(birth))
 
 ### 파생변수 만들기 - 나이
-welfare15$age <- 2015-birth+1
+welfare15$age <- 2015-welfare15$birth+1
 summary(welfare15$age)
 qplot(welfare15$age)
 
@@ -153,3 +153,45 @@ age_income15[34,]
 
 which(age_income20$mean_income==max(age_income20))
 age_income20[26,]
+#---
+
+# 연령대에 따른 월급 차이
+## 연령대 파생변수
+welfare15 <- welfare15 %>% 
+  mutate(ageg=ifelse(age<30,"young",
+                     ifelse(age<=59, "middle","old")))
+table(welfare15$ageg)
+qplot(welfare15$ageg)
+
+## 연령대별 월급 평균표
+ageg_income15 <- welfare15 %>% 
+  filter(!is.na(income)) %>% 
+  group_by(ageg) %>% 
+  summarise(mean_income15=mean(income))
+ageg_income15
+
+ggplot(ageg_income15, aes(x=ageg,y=mean_income15))+
+  geom_col()+
+  scale_x_discrete(limits=c("young","middle","old"))
+
+# 성별 월급 차이는 연령대별로 다른지
+## 연령대 및 성별 월급 평균표
+sex_income15 <- welfare15 %>% 
+  filter(!is.na(income)) %>% 
+  group_by(ageg,sex) %>% 
+  summarise(mean_income15=mean(income))
+
+ggplot(sex_income15, aes(x=ageg, y=mean_income15, fill=sex))+
+  geom_col(position="dodge")+
+  scale_x_discrete(limits=c("young","middle","old"))
+
+# 나이 및 성별 월급 차이
+sex_age15 <- welfare15 %>% 
+  filter(!is.na(income)) %>% 
+  group_by(age,sex) %>% 
+  summarise(mean_income15=mean(income))
+head(sex_age15)
+
+ggplot(sex_age15,aes(x=age,y=mean_income15,col=sex)) + geom_line()
+
+# 233page
