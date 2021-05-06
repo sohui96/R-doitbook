@@ -47,17 +47,17 @@ library(dplyr)
 library(ggplot2)
 library(readxl)
 
-raw_welfare <- read.spss("./Data/Koweps_hpc10_2015_beta1.sav", to.data.frame=T)
-welfare <- raw_welfare
+raw_welfare15 <- read.spss("./Data/Koweps_hpc10_2015_beta1.sav", to.data.frame=T)
+welfare15 <- raw_welfare15
 
-head(welfare)
-tail(welfare)
-View(welfare)
-dim(welfare)
-str(welfare)
-summary(welfare)
+head(welfare15)
+tail(welfare15)
+View(welfare15)
+dim(welfare15)
+str(welfare15)
+summary(welfare15)
 
-welfare <- rename(welfare, 
+welfare15 <- rename(welfare15, 
                   sex=h10_g3,
                   birth=h10_g4,
                   marriage=h10_g10,
@@ -68,18 +68,18 @@ welfare <- rename(welfare,
 
 # 성별과 월급의 관계
 ## 변수검토 및 전처리
-attach(welfare)
+attach(welfare15)
 class(sex)
 
 ### 이상치 확인
 table(sex)
 
 ### 이상치 결측 처리
-welfare$sex <- ifelse(sex==9, NA, sex)
+welfare15$sex <- ifelse(sex==9, NA, sex)
 ### 결측치 확인
 table(is.na(sex))
 
-welfare$sex <- ifelse(sex==1, "male","female")
+welfare15$sex <- ifelse(sex==1, "male","female")
 table(sex)
 qplot(sex)
 
@@ -93,13 +93,13 @@ qplot(income) + xlim(0,1000)
 ### 이상치 확인
 summary(income)
 ### 이상치 결측 처리
-welfare$income <- ifelse(income %in% c(0,9999), NA, income)
+welfare15$income <- ifelse(income %in% c(0,9999), NA, income)
 ### 결측치 확인
 table(is.na(income))
 
 ## 변수 간 관계 분석
 # 성별에 따른 월급
-sex_income15 <- welfare %>% 
+sex_income15 <- welfare15 %>% 
   filter(!is.na(income)) %>% 
   group_by(sex) %>% 
   summarise(mean_income=mean(income))
@@ -123,15 +123,15 @@ birth <- ifelse(birth==9999, NA, birth)
 table(is.na(birth))
 
 ### 파생변수 만들기 - 나이
-welfare$age <- 2015-birth+1
-summary(welfare$age)
-qplot(welfare$age)
+welfare15$age <- 2015-birth+1
+summary(welfare15$age)
+qplot(welfare15$age)
 
-detach(welfare)
+detach(welfare15)
 
 ## 변수 간 관계 분석
 ### 나이에 따른 월급 평균표
-age_income15 <- welfare %>% 
+age_income15 <- welfare15 %>% 
   filter(!is.na(income)) %>% 
   group_by(age) %>% 
   summarise(mean_income=mean(income))
