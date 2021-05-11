@@ -1,0 +1,96 @@
+---
+title: '5/11 R 프로그래밍 학습일지11'
+author: "Nigella"
+date: '2021/5/11'
+output: rmarkdown::github_document
+editor_options: 
+  chunk_output_type: console
+---
+
+H0 : 기존 2016년도 고객 불만율과 2017년도 CS교육 후 불만율에 차이가 없다.
+
+H1 : 기존 2016년도 고객 불만율과 2017년도 CS교육 후 불만율에 차이가 있다.
+
+```{r}
+setwd("./가설검정_book/Part-III")
+data <- read.csv("one_sample.csv", header=T)
+head(data)
+```
+
+# 단일표본 대상 기술통계량
+
+## 단일표본 빈도수와 비율 계산
+
+```{r}
+x = data$survey
+summary(x) # factor인데 해보는 이유는 na 확인하려고, 다른 라이브러리 사용 귀찮아서
+length(x)
+table(x)
+library(prettyR)
+freq(x)
+```
+
+## 이항분포 비율검정
+
+  명목척도의 비율을 바탕으로 이항분포의 양측검정을 통해서 검정통계량을 구한 후 이를 이용하여 가설을 검정한다.
+  
+```{r}
+binom.test(c(136,14),p=0.8,
+           alternative = c("two.sided","less","greater"),
+           conf.level = 0.95)
+```
+
+---
+
+H0 : 국내에서 생산된 노트북과 a회사에서 생산된 노트북의 평균 사용 시간에 차이가 없다. 
+
+H1 : 국내에서 생산된 노트북과 a회사에서 생산된 노트북의 평균 사용 시간에 차이가 있다.
+
+# 단일집단 평균검정(단일표본 t검정)
+
+## 단일표본 평균 계산
+```{r}
+str(data)
+head(data)
+x<-data$time
+summary(x)
+mean(x, na.rm=T)
+x1<-na.omit(x)
+mean(x1)
+# 정규성 검정
+shapiro.test(x1)
+hist(x1)
+qqnorm(x1)
+qqline(x1,lty=1,col='blue')
+# 평균 차이 검정
+t.test(x1, mu=5.2, alter="two.side", conf.level=0.95)
+```
+
+master <- main
+branch delete
+site.xml
+cmd > bundle > bash tools/init.sh
+
+
+# 두집단 평균검정(독립표본 t검정)
+
+## 독립표본 평균 계산
+```{r}
+data <- read.csv("./가설검정_book/Part-III/two_sample.csv", header=T)
+head(data)
+summary(data)
+result <- subset(data, !is.na(score), c(method, score))
+length(result$score)
+a <- subset(result, method==1)
+b <- subset(result, method==2)
+a1 <- a$score
+b1 <- b$score
+length(a1); length(b1)
+mean(a1); mean(b1)
+
+# 동질성 검정
+var.test(a1,b1)
+
+t.test(a1,b1,alter="two.sided")
+
+```
