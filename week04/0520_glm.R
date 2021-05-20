@@ -1,0 +1,16 @@
+library(aod)
+library(ggplot2)
+
+mydata=read.csv("https://stats.idre.ucla.edu/stat/data/binary.csv")
+head(mydata)
+summary(mydata)
+str(mydata)
+sapply(mydata ,sd)
+xtabs(~admit+rank, data=mydata)
+
+mydata$rank <- factor(mydata$rank)
+myloghit <- glm(admit~gre+gpa+rank, data=mydata, family="binomial")
+summary(myloghit)
+exp(coef(myloghit))
+confint(myloghit)
+confint.default(myloghit)
